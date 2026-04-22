@@ -140,15 +140,15 @@ class PaymentSuccess(View):
 
         id = response['razorpay_order_id']
         o = Order.objects.get(order_id=id)   #fetches the corresponding order from the database using the order ID
-        o.is_ordered = True       #(Order complete ആയി mark ചെയ്യുന്നു)
+        o.is_ordered = True       #(Order completed like marking)
         o.save()
 
-         #(Userന്റെ cart items എല്ലാം എടുത്തു)
+         #(User cart items all taken)
         c=Cart.objects.filter(user=o.user)
 
         #This loops through each item in the cart.
         for i in c:
-            #(Cart → OrderItems ആയി convert ചെയ്യുന്നു)
+            #(Cart → OrderItems  converting)
             items=OrderItems.objects.create(order=o,product=i.product,quantity=i.quantity,price=i.product.price)
             items.save()
 
