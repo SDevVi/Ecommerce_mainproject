@@ -14,10 +14,10 @@ class Products(models.Model):
     description=models.TextField()
     image=models.ImageField(upload_to='products')
     stock=models.IntegerField()
-    price=models.IntegerField()
-    available = models.IntegerField(default=True)
+    price=models.DecimalField(max_digits=10,decimal_places=2)
+    available = models.BooleanField(default=True)
 
-    category = models.ForeignKey(Category,on_delete=models.CASCADE, related_name='category')
+    category = models.ForeignKey(Category,on_delete=models.CASCADE, related_name='products')
 
     created_at =models.DateTimeField(auto_now_add=True)
     updated_at =models.DateTimeField(auto_now=True)

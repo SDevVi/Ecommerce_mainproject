@@ -1,4 +1,3 @@
-
 from django import forms
 
 
@@ -19,3 +18,23 @@ class SignUpForm(UserCreationForm):
 class LoginForm(forms.Form):
     username=forms.CharField()
     password=forms.CharField(widget=forms.PasswordInput)
+
+from shop.models import Category, Products
+
+class CategoryForm(forms.ModelForm):
+    class Meta:
+        model = Category
+        fields = ['name', 'description', 'image']
+
+
+class ProductForm(forms.ModelForm):
+    class Meta:
+        model = Products
+        fields = ['name', 'description', 'image', 'stock', 'price', 'available', 'category']
+
+
+
+class StockForm(forms.ModelForm):
+    class Meta:
+        model = Products
+        fields = ['stock']
