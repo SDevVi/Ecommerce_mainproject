@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block header %}
+    <div class="hero-wrap hero-bread" style="background-image: url({% static 'images/bg_1.jpg' %});">
+      <div class="container">
+        <div class="row no-gutters slider-text align-items-center justify-content-center">
+          <div class="col-md-9 ftco-animate text-center">
+          	<p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home</a></span> <span>Login</span></p>
+            <h1 class="mb-0 bread">Order Summary</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+
+  <h3 class="text-center mb-4">My Orders</h3>
+
+  {% for i in orders %}
+    <div class="card mb-4 shadow-sm">
+
+      <!-- ORDER HEADER -->
+      <div class="card-header bg-dark text-white">
+        <p class="mb-1"><strong>Order ID:</strong> {{ i.order_id }}</p>
+        <p class="mb-1"><strong>Total:</strong> ₹{{ i.amount }}</p>
+        <p class="mb-1"><strong>Ordered on:</strong> {{ i.ordered_date }}</p>
+        <p class="mb-0">
+          <strong>Status:</strong>
+          <span class="badge bg-success">Completed</span>
+        </p>
+      </div>
+
+      <!-- PRODUCTS -->
+      <div class="card-body">
+
+        {% for j in i.items.all %}
+          <div class="d-flex align-items-center border-bottom py-3">
+
+            <!-- PRODUCT IMAGE -->
+            <div style="width: 240px; height: 160px; flex-shrink: 0;">
+              <img src="{{ j.product.image.url }}"
+                   class="img-fluid rounded"
+                   style="width:100%; height:100%; object-fit:cover;">
+            </div>
+
+            <!-- PRODUCT DETAILS -->
+            <div class="ms-3">
+              <h5 class="mb-2">{{ j.product.name }}</h5>
+
+              <p class="mb-1 text-muted">
+                Price: ₹{{ j.product.price }}
+              </p>
+
+              <p class="mb-1">
+                Quantity: <strong>{{ j.quantity }}</strong>
+              </p>
+
+              <p class="mb-0">
+                Total: ₹{{ j.product.price|floatformat:2 }}
+              </p>
+            </div>
+
+          </div>
+        {% endfor %}
+
+      </div>
+
+    </div>
+  {% endfor %}
+
+</div>
+{% endblock %}
